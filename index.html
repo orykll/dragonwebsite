@@ -3,16 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>basic form</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <form action="/submit" method="post">
-    <label for="user">Username:</label>
-    <input type="text" id="name" name="name" required>
-    <input type="checkbox" id="interestedA">
-    <input type="checkbox" id="interestedB">
-    <input type="checkbox" id="interestedDya">	
-	
-    <button type="submit">submit</button>
-  </form>
+  <div class="container">
+    <div class="left-content">
+    <form id="surveyForm">
+      <label for="user">Flight Rising Lair link:</label>
+      <input type="text" id="username" required><br>
+      <input type="checkbox" id="interestedDya">Dya<br>
+      <input type="checkbox" id="interestedImp">G2 Imperials<br>
+      <input type="checkbox" id="interestedFir">Firuxe<br>
+      <input type="checkbox" id="interestedAus">Ausra<br>
+      <input type="checkbox" id="interestedZin">Zinovia<br>
+      <input type="checkbox" id="interestedEly">Elysian<br>
+      <input type="checkbox" id="interestedSer">Seraph<br>
+      <input type="checkbox" id="interestedStf">Descendants of Staff Member dragons<br>
+      <input type="checkbox" id="interestedRnd">Roundsey Purebreds<br>
+      <input type="checkbox" id="interestedNao">Naomi<br>
+      <input type="checkbox" id="interestedIgn">Ignis<br>
+      <input type="checkbox" id="interestedLck">Luck<br>	
+    
+      <button type="submit">submit</button><br>
+    </form>
+    </div>
+    <div class="right-content"><img src="img/act.png" alt="act"></div>
+  </div>
+  <div class="output">
+
+  </div>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
