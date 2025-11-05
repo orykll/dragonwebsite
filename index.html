@@ -8,7 +8,7 @@
 <body>
   <div class="container">
     <div class="left-content">
-    <form id="surveyForm">
+            <form id="surveyForm">
       <label for="user">Flight Rising Lair link:</label>
       <input type="url" id="username" required><br>
       <input type="checkbox" id="interestedDya">Dya<br>
@@ -25,9 +25,31 @@
       <input type="checkbox" id="interestedLck">Luck<br>	
     
       <button type="submit">submit</button><br>
-    </form>
+            </form>
+      </div> <div class="remove-section">
+      <h3>Remove me from the list</h3>
+      
+      <div id="removeForm">
+        <label for="removeLairLink">Flight Rising Lair link:</label>
+        <input type="url" id="removeLairLink" required><br>
+
+        <button type="button" id="showConfirmButton" class="remove-btn">
+          Remove me from all pinglists
+        </button>
+
+        <div id="confirmationArea" style="display: none; margin-top: 10px;">
+          <p><strong>Are you sure? This cannot be undone.</strong></p>
+          <button type="button" id="confirmDeleteButton" class="remove-btn-confirm">
+            Yes, I am sure
+          </button>
+          <button type="button" id="cancelDeleteButton" class="remove-btn-cancel">
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="right-content"><img src="img/act.png" alt="act"></div>
+    </div>
+    <!--<div class="right-content"><img src="img/act.png" alt="act"></div>-->i
   </div>
   <div class="output">
 

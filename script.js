@@ -1,43 +1,66 @@
-/*import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";*/
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-/*const firebaseConfig = {
-  apiKey: "AIzaSyAM6z8ty656BidjK3XwucTrkYeD-ygQAG4",
-  authDomain: "lineagelist-92fe6.firebaseapp.com",
-  databaseURL: "https://lineagelist-92fe6-default-rtdb.firebaseio.com",
-  projectId: "lineagelist-92fe6",
-  storageBucket: "lineagelist-92fe6.firebasestorage.app",
-  messagingSenderId: "404525529371",
-  appId: "1:404525529371:web:49323df5ee817f6fce7bbe",
-  measurementId: "G-521TV42GMF"
-};*/
-
-//refer msgs collection
-
-// 1. Import the db instance from the module script block in your HTML
 // Import the 'db' instance from your config file
 import { db } from './firebase-config.js';
 
 // Import the Firestore functions we need
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+// UPDATED: Added query, where, deleteDoc, and doc
+import { 
+  collection, 
+  addDoc, 
+  getDocs,
+  query,        // <-- NEW
+  where,        // <-- NEW
+  deleteDoc,    // <-- NEW
+  doc           // <-- NEW
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-// Get a reference to the form
+// === GET REFERENCES TO ALL ELEMENTS ===
 const form = document.getElementById('surveyForm');
 const outputDiv = document.querySelector('.output');
 
-// Listen for the form's submit event
-form.addEventListener('submit', async (e) => {
-  // Prevent the form from actually submitting (which reloads the page)
-  e.preventDefault();
+// --- NEW "REMOVE" ELEMENT REFERENCES ---
+const removeLairLinkInput = document.getElementById('removeLairLink');
+const showConfirmButton = document.getElementById('showConfirmButton');
+const confirmationArea = document.getElementById('confirmationArea');
+const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+const cancelDeleteButton = document.getElementById('cancelDeleteButton');
 
-  // Show feedback to the user
-  outputDiv.textContent = 'Submitting...';
+
+// === FUNCTION TO DISPLAY SUBMISSIONS ===
+async function displaySubmissions() {
+  outputDiv.innerHTML = '<em>Loading submissions...</em>';
+  const querySnapshot = await getDocs(collection(db, "submissions"));
+  
+  let submissionsHtml = '<h3>Current Submissions:</h3>';
+  
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const userInterests = Object.keys(data.interests)
+      .filter(key => data.interests[key] === true)
+      .join(', ');
+
+    submissionsHtml += `
+      <div class="submission-card">
+        <p><strong>Lair:</strong> <a href="${data.lairLink}" target="_blank">${data.lairLink}</a></p>
+        <p><strong>Interests:</strong> ${userInterests || 'None listed'}</p>
+      </div>
+    `;
+  });
+
+  if (querySnapshot.empty) {
+    submissionsHtml = '<p>No submissions yet!</p>';
+  }
+  outputDiv.innerHTML = submissionsHtml;
+}
+
+// === LISTENER FOR THE "ADD" FORM ===
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitButton = form.querySelector('button');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Submitting...';
 
   try {
-    // 1. Get all the values from the form
     const lairLink = document.getElementById('username').value;
-    
-    // Create an object with all the checkbox values
     const interests = {
       Dya: document.getElementById('interestedDya').checked,
       G2_Imperials: document.getElementById('interestedImp').checked,
@@ -52,175 +75,97 @@ form.addEventListener('submit', async (e) => {
       Ignis: document.getElementById('interestedIgn').checked,
       Luck: document.getElementById('interestedLck').checked
     };
-
-    // 2. Create the data object to save
     const submissionData = {
       lairLink: lairLink,
       interests: interests,
-      submittedAt: new Date() // Good practice to add a timestamp
+      submittedAt: new Date()
     };
 
-    // 3. Add a new document to a collection named "submissions"
-    const docRef = await addDoc(collection(db, "submissions"), submissionData);
+    await addDoc(collection(db, "submissions"), submissionData);
+    
+    form.reset(); 
+    submitButton.disabled = false;
+    submitButton.textContent = 'Submit';
 
-    // 4. Give the user success feedback
-    console.log("Document written with ID: ", docRef.id);
-    outputDiv.textContent = 'Thank you! Your submission was successful.';
-    form.reset(); // Clear the form
+    await displaySubmissions(); // Refresh the list
 
   } catch (error) {
-    // 5. Handle errors
     console.error("Error adding document: ", error);
-    outputDiv.textContent = 'Error: Could not submit form. Please try again.';
+    alert('Error: Could not submit form. Please try again.');
+    submitButton.disabled = false;
+    submitButton.textContent = 'Submit';
   }
 });
 
-/*var messagesRef = firebaseConfig.database().ref('users');
 
-document.getElementById('surveyForm').addEventListener('submit', submitForm);
+// === INITIAL PAGE LOAD ===
+displaySubmissions();
 
-function submitForm(e){
-    e.preventDefault();
-//getb
-    var username = getInputVal('username');
-    var dya = getInputVal('interestedDya');
-    var imp = getInputVal('interestedImp');
-    var fir = getInputVal('interestedFir');
-    var aus = getInputVal('interestedAus');
-    var zin = getInputVal('interestedZin');
-    var ely = getInputVal('interestedEly');
-    var ser = getInputVal('interestedSer');
-    var stf = getInputVal('interestedStf');
-    var rnd = getInputVal('interestedRnd');
-    var nao = getInputVal('interestedNao');
-    var ign = getInputVal('interestedIgn');
-    var lck = getInputVal('interestedLck');
-//savemsg
-    saveMessage(username, dya, imp, fir, aus, zin, ely, ser, stf, rnd, nao, ign, lck);
+
+// =======================================
+//  NEW "REMOVE ME" JAVASCRIPT LOGIC
+// =======================================
+
+// 1. Listen for click on the first red button
+showConfirmButton.addEventListener('click', () => {
+  const lairLink = removeLairLinkInput.value;
+  if (!lairLink) {
+    alert('Please paste in your lair link first.');
+    return;
   }
-// function to get form values
-function getInputVal(id){
-  return document.getElementById(id).value;
-}
-//
-function saveMessage(username, dya, imp, fir, aus, zin, ely, ser, stf, rnd, nao, ign, lck){
-  var newMessageRef = messagesRef.push();
-  newMessageRef.set({
-    username: username,
-    dya: dya,
-    imp: imp,
-    fir: fir,
-    aus: aus,
-    zin:zin,
-    ely:ely,
-    ser:ser,
-    stf:stf,
-    rnd:rnd,
-    nao:nao,
-    ign:ign,
-    lck:lck
-  });
+  // If link is present, show the confirmation buttons
+  confirmationArea.style.display = 'block';
+});
 
-}
+// 2. Listen for click on the "Cancel" button
+cancelDeleteButton.addEventListener('click', () => {
+  confirmationArea.style.display = 'none'; // Just hide the confirmation
+});
 
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  /*const firebaseConfig = {
-    apiKey: "AIzaSyAM6z8ty656BidjK3XwucTrkYeD-ygQAG4",
-    authDomain: "lineagelist-92fe6.firebaseapp.com",
-    databaseURL: "https://lineagelist-92fe6-default-rtdb.firebaseio.com",
-    projectId: "lineagelist-92fe6",
-    storageBucket: "lineagelist-92fe6.firebasestorage.app",
-    messagingSenderId: "404525529371",
-    appId: "1:404525529371:web:49323df5ee817f6fce7bbe",
-    measurementId: "G-521TV42GMF"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  async function submitSurvey(username, interest) {
-  await db.collection("surveys").add({
-    username: username,
-    interest: interest,
-    timestamp: new Date()
-  });
-  alert("Survey submitted!");
-}
-
-/*
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
-  //firebaseConfig.initializeApp(firebaseConfig);
-
- /* var lineageList = firebaseConfig.database().ref('lineagelist')
-
+// 3. Listen for the final "Yes, I am sure" click
+confirmDeleteButton.addEventListener('click', async () => {
+  const lairLinkToDelete = removeLairLinkInput.value;
   
+  // Disable buttons to prevent double-click
+  confirmDeleteButton.disabled = true;
+  confirmDeleteButton.textContent = 'Removing...';
 
-  
+  try {
+    // A. Find the document(s) that match the lair link
+    // Create a query: "In the 'submissions' collection, find all docs
+    // where the 'lairLink' field is equal to our variable"
+    const q = query(collection(db, "submissions"), where("lairLink", "==", lairLinkToDelete));
 
-    console.log(123);
+    // B. Execute the query
+    const querySnapshot = await getDocs(q);
 
-    var username = getInputVal('username');
-    var dya = getInputVal('interestedDya');
-    var imp = getInputVal('interestedImp');
-    var fir = getInputVal('interestedFir');
-    var aus = getInputVal('interestedAus');
-    var zin = getInputVal('interestedZin');
-    var ely = getInputVal('interestedEly');
-    var ser = getInputVal('interestedSer');
-    var stf = getInputVal('interestedStf');
-    var rnd = getInputVal('interestedRnd');
-    var nao = getInputVal('interestedNao');
-    var ign = getInputVal('interestedIgn');
-    var lck = getInputVal('interestedLck');
+    if (querySnapshot.empty) {
+      alert('No submission found for that Lair link.');
+    } else {
+      // C. Loop through the results (even if there's only one) and delete them
+      let deleteCount = 0;
+      for (const docSnapshot of querySnapshot.docs) {
+        // 'docSnapshot' is the document we found
+        // 'doc' is a function to create a reference to it
+        console.log(`Deleting document ${docSnapshot.id}`);
+        await deleteDoc(doc(db, "submissions", docSnapshot.id));
+        deleteCount++;
+      }
+      alert(`Successfully removed ${deleteCount} submission(s).`);
+    }
 
-    var username = getInputValue('username');
-    var dya = getElementValue('interestedDya');
-    var imp = getElementValue('interestedImp');
-    var fir = getElementValue('interestedFir');
-    var aus = getElementValue('interestedAus');
-    var zin = getElementValue('interestedZin');
-    var ely = getElementValue('interestedEly');
-    var ser = getElementValue('interestedSer');
-    var stf = getElementValue('interestedStf');
-    var rnd = getElementValue('interestedRnd');
-    var nao = getElementValue('interestedNao');
-    var ign = getElementValue('interestedIgn');
-    var lck = getElementValue('interestedLck');
+    // D. Clean up and refresh
+    removeLairLinkInput.value = ''; // Clear the input
+    confirmationArea.style.display = 'none'; // Hide confirmation
+    confirmDeleteButton.disabled = false;
+    confirmDeleteButton.textContent = 'Yes, I am sure';
+    
+    await displaySubmissions(); // Refresh the list
 
-    console.log(username, dya, imp, fir, aus, zin, ely, ser, stf, rnd, nao, ign, lck);
+  } catch (error) {
+    console.error('Error removing document: ', error);
+    alert('An error occurred. Could not remove submission.');
+    confirmDeleteButton.disabled = false;
+    confirmDeleteButton.textContent = 'Yes, I am sure';
   }
-
-  const getElementValue = (id) => {
-    return document.getElementById(id).value; 
-  }
-  
-  // Initialize Firebase
-
-/*
-document.getElementById("surveyForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value.trim();
-    const interests = [];
-
-    document.querySelectorAll('input[type="checkbox"]').forEach((box) => {
-      if (box.checked) interests.push(box.id.replace("interested", ""));
-    });
-
-    if (!username) return alert("Please enter a username.");
-
-    await db.collection("surveys").add({
-      username: username,
-      interests: interests,
-      timestamp: new Date()
-    });
-
-    alert("Survey submitted successfully.");
-  });
-  */
+});
