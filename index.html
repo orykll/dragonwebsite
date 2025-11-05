@@ -9,22 +9,131 @@
   <div class="container">
     <div class="left-content">
             <form id="surveyForm">
-      <label for="user">Flight Rising Lair link:</label>
-      <input type="url" id="username" required><br>
-      <input type="checkbox" id="interestedDya">Dya<br>
-      <input type="checkbox" id="interestedImp">G2 Imperials<br>
-      <input type="checkbox" id="interestedFir">Firuxe<br>
-      <input type="checkbox" id="interestedAus">Ausra<br>
-      <input type="checkbox" id="interestedZin">Zinovia<br>
-      <input type="checkbox" id="interestedEly">Elysian<br>
-      <input type="checkbox" id="interestedSer">Seraph<br>
-      <input type="checkbox" id="interestedStf">Descendants of Staff Member dragons<br>
-      <input type="checkbox" id="interestedRnd">Roundsey Purebreds<br>
-      <input type="checkbox" id="interestedNao">Naomi<br>
-      <input type="checkbox" id="interestedIgn">Ignis<br>
-      <input type="checkbox" id="interestedLck">Luck<br>	
-    
-      <button type="submit">submit</button><br>
+      <label for="username">Flight Rising Lair link:</label>
+<input type="url" id="username" required><br>
+
+<p>Please select the pinglists you are interested in:</p>
+
+<fieldset>
+  <legend>Dya</legend>
+  <input type="checkbox" id="dya-everything"> <label for="dya-everything">Everything!</label><br>
+  <input type="checkbox" id="dya-impure-g2s"> <label for="dya-impure-g2s">Impure G2s</label><br>
+  <input type="checkbox" id="dya-pure-g2s"> <label for="dya-pure-g2s">Pure G2s</label><br>
+  <input type="checkbox" id="dya-collabs"> <label for="dya-collabs">Lineage Collaborations</label><br>
+  <input type="checkbox" id="dya-g3plus"> <label for="dya-g3plus">G3+</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>G2 Imperials</legend>
+  <input type="checkbox" id="imp-pure-g2s"> <label for="imp-pure-g2s">Pure G2s</label><br>
+  <input type="checkbox" id="imp-impure-g2s"> <label for="imp-impure-g2s">Impure G2s</label><br>
+  <input type="checkbox" id="imp-events"> <label for="imp-events">Events</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Firuxe (Fux)</legend>
+  <input type="checkbox" id="fux-everything"> <label for="fux-everything">Everything!</label><br>
+  <input type="checkbox" id="fux-thread-up"> <label for="fux-thread-up">Thread is UP! (one time ping)</label><br>
+  <input type="checkbox" id="fux-g2s"> <label for="fux-g2s">Just G2s</label><br>
+  <input type="checkbox" id="fux-collabs"> <label for="fux-collabs">Lineage Collaborations</label><br>
+  <input type="checkbox" id="fux-g3"> <label for="fux-g3">G3</label><br>
+  <input type="checkbox" id="fux-g4"> <label for="fux-g4">G4</label><br>
+  <input type="checkbox" id="fux-g5plus"> <label for="fux-g5plus">G5+</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Ausra</legend>
+  <input type="checkbox" id="aus-everything"> <label for="aus-everything">Everything!</label><br>
+  <input type="checkbox" id="aus-g2"> <label for="aus-g2">G2</label><br>
+  <input type="checkbox" id="aus-g3"> <label for="aus-g3">G3</label><br>
+  <input type="checkbox" id="aus-g4plus"> <label for="aus-g4plus">G4+</label><br>
+  <input type="checkbox" id="aus-events"> <label for="aus-events">Events</label><br>
+  <input type="checkbox" id="aus-collabs"> <label for="aus-collabs">Lineage Collaborations</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Zinovia (Zin)</legend>
+  <input type="checkbox" id="zin-everything"> <label for="zin-everything">Everything!</label><br>
+  <input type="checkbox" id="zin-g2"> <label for="zin-g2">G2</label><br>
+  <input type="checkbox" id="zin-g3"> <label for="zin-g3">G3</label><br>
+  <input type="checkbox" id="zin-g4plus"> <label for="zin-g4plus">G4+</label><br>
+  <input type="checkbox" id="zin-events"> <label for="zin-events">Events</label><br>
+  <input type="checkbox" id="zin-collabs"> <label for="zin-collabs">Lineage Collaborations</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Elysian (#1000)</legend>
+  <input type="checkbox" id="ely-everything"> <label for="ely-everything">Everything!</label><br>
+  <input type="checkbox" id="ely-thread-up"> <label for="ely-thread-up">Thread is UP! (one time ping)</label><br>
+  <input type="checkbox" id="ely-g2"> <label for="ely-g2">G2</label><br>
+  <input type="checkbox" id="ely-g3"> <label for="ely-g3">G3</label><br>
+  <input type="checkbox" id="ely-g4plus"> <label for="ely-g4plus">G4+</label><br>
+  <input type="checkbox" id="ely-collabs"> <label for="ely-collabs">Lineage Collaborations</label><br>
+  <input type="checkbox" id="ely-events"> <label for="ely-events">Events</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Seraph (#130)</legend>
+  <input type="checkbox" id="ser-everything"> <label for="ser-everything">Everything!</label><br>
+  <input type="checkbox" id="ser-g2"> <label for="ser-g2">G2</label><br>
+  <input type="checkbox" id="ser-collabs"> <label for="ser-collabs">Lineage Collaborations</label><br>
+  <input type="checkbox" id="ser-g3"> <label for="ser-g3">G3</label><br>
+  <input type="checkbox" id="ser-g4plus"> <label for="ser-g4plus">G4+</label><br>
+  <input type="checkbox" id="ser-events"> <label for="ser-events">Events</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Staff Descendants (#16 and #17)</legend>
+  <input type="checkbox" id="staff-g2"> <label for="staff-g2">G2 (a dragon can dream!)</label><br>
+  <input type="checkbox" id="staff-g3"> <label for="staff-g3">G3</label><br>
+  <input type="checkbox" id="staff-g4"> <label for="staff-g4">G4</label><br>
+  <input type="checkbox" id="staff-g5plus"> <label for="staff-g5plus">G5+</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Roundsey</legend>
+  <input type="checkbox" id="round-g1-resell"> <label for="round-g1-resell">G1! (I'm reselling a Roundsey Dragon!)</label><br>
+  <input type="checkbox" id="round-g2-pure"> <label for="round-g2-pure">G2 Pure (Roundsey X Roundsey)</label><br>
+  <input type="checkbox" id="round-g2-lineage"> <label for="round-g2-lineage">G2 Lineage (Roundsey X Lineage dragon)</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Naomi</legend>
+  <input type="checkbox" id="nao-g3"> <label for="nao-g3">G3</label><br>
+  
+  <input type="checkbox" id="nao-g4"> <label for="nao-g4">G4</label><br>
+  
+  <div id="naomi-g4-options" style="display: none; margin-left: 25px; border: 1px solid #eee; padding: 10px;">
+    <label>G4 Options:</label><br>
+    <input type="checkbox" id="nao-g4-everything"> <label for="nao-g4-everything">Everything</label><br>
+    <input type="checkbox" id="nao-g4-events"> <label for="nao-g4-events">Events</label><br>
+    <input type="checkbox" id="nao-g4-collabs"> <label for="nao-g4-collabs">Lineage Collaborations</label><br>
+    <input type="checkbox" id="nao-g4-auctions"> <label for="nao-g4-auctions">Auctions</label><br>
+    <input type="checkbox" id="nao-g4-flatsales"> <label for="nao-g4-flatsales">Flat Sales</label><br>
+  </div>
+  
+  <input type="checkbox" id="nao-g5"> <label for="nao-g5">G5</label><br>
+  <input type="checkbox" id="nao-g6plus"> <label for="nao-g6plus">G6+</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Ignis (#666)</legend>
+  <input type="checkbox" id="ign-g2"> <label for="ign-g2">G2</label><br>
+  <input type="checkbox" id="ign-g3"> <label for="ign-g3">G3</label><br>
+  <input type="checkbox" id="ign-g4"> <label for="ign-g4">G4</label><br>
+  <input type="checkbox" id="ign-g5plus"> <label for="ign-g5plus">G5+</label><br>
+</fieldset>
+
+<fieldset>
+  <legend>Luck</legend>
+  <input type="checkbox" id="luck-g2"> <label for="luck-g2">G2</label><br>
+  <input type="checkbox" id="luck-g3"> <label for="luck-g3">G3</label><br>
+  <input type="checkbox" id="luck-g4"> <label for="luck-g4">G4</label><br>
+  <input type="checkbox" id="luck-g5plus"> <label for="luck-g5plus">G5+</label><br>
+</fieldset>
+
+<br>
+<button type="submit">submit</button><br>
             </form>
       </div> <div class="remove-section">
       <h3>Remove me from the list</h3>
@@ -37,7 +146,7 @@
           Remove me from all pinglists
         </button>
 
-        <div id="confirmationArea" style="display: none; margin-top: 10px;">
+        <div id="confirmationArea">
           <p><strong>Are you sure? This cannot be undone.</strong></p>
           <button type="button" id="confirmDeleteButton" class="remove-btn-confirm">
             Yes, I am sure
@@ -50,9 +159,6 @@
     </div>
     </div>
     <!--<div class="right-content"><img src="img/act.png" alt="act"></div>-->i
-  </div>
-  <div class="output">
-
   </div>
   <script type="module" src="script.js"></script>
 </body>

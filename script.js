@@ -169,3 +169,18 @@ confirmDeleteButton.addEventListener('click', async () => {
     confirmDeleteButton.textContent = 'Yes, I am sure';
   }
 });
+// --- NEW: NAOMI G4 VISIBILITY TOGGLE ---
+const naomiG4Checkbox = document.getElementById('nao-g4');
+const naomiG4Options = document.getElementById('naomi-g4-options');
+
+naomiG4Checkbox.addEventListener('change', () => {
+  if (naomiG4Checkbox.checked) {
+    naomiG4Options.style.display = 'block'; // Show the options
+  } else {
+    naomiG4Options.style.display = 'none'; // Hide them
+    
+    // Also uncheck all the sub-options when hiding
+    const subCheckboxes = naomiG4Options.querySelectorAll('input[type="checkbox"]');
+    subCheckboxes.forEach(cb => cb.checked = false);
+  }
+});

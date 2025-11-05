@@ -45,3 +45,15 @@ button {
     background-color: #AAAAAA;
     border: 1px solid #CCCCCC;
 }
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+legend {
+  font-weight: bold;
+  padding: 0 10px;
+  margin-left: 5px;
+}
